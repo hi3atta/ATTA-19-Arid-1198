@@ -1,0 +1,29 @@
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Image } from 'react-native';
+
+export default function App() {
+  return (
+
+    <View style={styles.container}>
+      <Image style={{height:150,width:150}} source={require('./atta.jpg')}/>
+    <Text>Name: Muhammad Attaurrehman</Text>
+      <Text>Arid No: 19-Arid-1198</Text>
+      <StatusBar style="auto" />
+      <Text>Department:IT</Text>
+      <Text>Degree: Bs Software Engineering</Text>
+      
+
+    </View>
+  );
+  }
+   
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
