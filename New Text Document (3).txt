@@ -1,0 +1,115 @@
+
+import java.sql.*;
+import  java.awt.*;
+import  java.awt.event.*;
+import javax.swing.*;
+public class Employee {
+
+    /**
+     *
+     * @author Atta
+     */
+    public static  void main(String [] args){
+	      JFrame fa=new JFrame("Employee");
+	       fa.setSize(600,600);
+	       JLabel str=new JLabel("Employee ID");
+	          str.setBounds(50,100, 100,40);  
+	        JTextField sr=new JTextField();
+	        sr.setBounds(40,40, 50,30);
+	         JLabel stn=new JLabel("Employee Name");
+	            stn.setBounds(50,50,80,40);  
+	        JTextField sn=new JTextField();
+	        sn.setBounds(40,40, 50,30);
+	         JLabel std=new JLabel("Employee Age");
+	            std.setBounds(50,50, 70,40);  
+	        JTextField sd=new JTextField();
+	        sd.setBounds(40,40, 50,30);
+	        JButton show=new JButton("Show data");
+	        show.setBounds(40,50,40,50);
+	          JButton submit=new JButton("Submit data");
+	        show.setBounds(40,50,40,50);
+	        JButton reset=new JButton("reset data");
+	        show.setBounds(40,50,40,50);
+	        JPanel p=new JPanel();
+	        fa.add(str);
+	        fa.add(sr);
+	        fa.add(stn);
+	        fa.add(sn);
+	        fa.add(std);
+	        fa.add(sd);
+	        p.add(show);
+	        p.add(submit);
+	        p.add(reset);
+	         fa.add(p);
+	        fa.setLayout(new GridLayout(7,2,20,20)); 
+	        fa.setVisible(true);
+	        show.addActionListener(new ActionListener() {  
+	              public void actionPerformed(ActionEvent e) {
+	            	  Connection conn = null;
+	  			 	try{
+	  			 	//STEP 2: Register JDBC driver
+	  			 	Class.forName("com.mysql.cj.jdbc.Driver");
+	  			 	//STEP 3: Open a connection
+	  			 	System.out.println("Connecting to database...");
+	  			 	String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+	  			 	//Database credentials
+	  			 	String USER = "root";
+	  			 	String PASS = "attakhan";
+	  			 	conn = DriverManager.getConnection(DB_URL,USER,PASS);
+	  			 	//STEP 4: Execute a query
+	  			 	System.out.println("Creating statement...");
+	  			 	Statement stmt = conn.createStatement();
+	  			 	String squery="Select  EmpID,EmpName,EmpAge from employee";
+	  			 	System.out.println("Succesfully executed");
+	  			 	ResultSet rs= stmt.executeQuery(squery);
+	  			 	while(rs.next()) {
+	  			 		int id  = rs.getInt("EmpID");
+	  				 	String name = rs.getString("EmpName");
+	  				 	int age = rs.getInt("EmpAge");
+	  			 		System.out.println(" employee id: "+id+"  name : "+name+"  age :  "+age);
+	  			 	}
+	  			 	stmt.close();
+				 	conn.close();
+	  			 	}catch(Exception se){
+	  				 	//Handle errors for JDBC
+	  				 	se.printStackTrace();
+	  				 	}   
+	              }
+	        });
+	        ////////////submitdata/////////////////
+	        submit.addActionListener(new ActionListener() {  
+	              public void actionPerformed(ActionEvent e) {
+					  int Empid=Integer.parseInt(sr.getText());
+	                
+	            	  String Empname=sn.getText();
+	            	
+	            	  int Empage=Integer.parseInt(sd.getText());
+	            	  
+	       System.out.println(" Employee id : "+Empid+" name : "+Empname+" Employee age: "+Empage);  
+	            	  Connection conn = null;
+	  			 	try{
+	  			 	//STEP 2: Register JDBC driver
+	  			 	Class.forName("com.mysql.cj.jdbc.Driver");
+	  			 	//STEP 3: Open a connection
+	  			 	System.out.println("Connecting to database...");
+	  			 	String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+	  			 	//Database credentials
+	  			 	String USER = "root";
+	  			 	String PASS = "attakhan";
+	  			 	conn = DriverManager.getConnection(DB_URL,USER,PASS);
+	  			 	//STEP 4: Execute a query
+	  			 	System.out.println("Creating statement...");
+	  			 	Statement stmt = conn.createStatement();
+	  			 	String ssql = "Insert into employee  Values ("+Empid+"','"+Empname+"','"+Empage+")";
+	  			 	System.out.println("Succesfully executed");
+	  			 	stmt.execute(ssql);
+	  			 	stmt.close();
+				 	conn.close();
+	  			 	}catch(Exception se){
+	  				 	//Handle errors for JDBC
+	  				 	se.printStackTrace();
+	  				 	}   
+	              }
+	        });
+	    }	
+}
